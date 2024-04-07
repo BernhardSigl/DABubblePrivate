@@ -1,0 +1,308 @@
+<mat-drawer-container
+  class="sidenav-wrapper"
+  [ngClass]="{
+    'with-margin': sideNavBtnStatus,
+    'without-margin': !sideNavBtnStatus,
+    hideForMobile: drawerService.isSelectedForMobile
+  }"
+  autosize
+  opened
+  disableClose="true"
+>
+  <mat-drawer #drawer class="sidenav-container" mode="side" opened="true">
+    <div class="horicontal spaceBetween side-nav-header">
+      <div class="channel-header-left horicontal">
+        <img src="./../../assets/img/channel-logo.png" />
+        <h4 class="bold">Code learning</h4>
+      </div>
+      <div class="add-channel-img" (click)="routeToDistribute()"></div>
+    </div>
+
+    <!-- search start -->
+    <div class="search">
+      <div class="header-input">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Code learning durchsuchen"
+          (click)="showDropdown = true"
+          (input)="search($event)"
+        />
+        <img
+          [src]="
+            !showDropdown
+              ? './../../assets/img/search.png'
+              : './../../assets/img/arrow-drop-up-black.png'
+          "
+          class="search-icon"
+          (click)="toggleDropdown()"
+        />
+      </div>
+
+      <div class="members-list-box-search input-slide-down" *ngIf="showDropdown">
+        <div>
+          <span
+            class="fs18"
+            *ngIf="
+              firebase.channelsDataWithRights.length === 0 &&
+              this.filteredUsers.length === 0
+            "
+          >
+            Keine Einträge gefunden.
+          </span>
+
+          <h3 class="bold" *ngIf="firebase.channelsDataWithRights.length !== 0">
+            Channels:
+          </h3>
+          <div
+            class="members-list-search horicontal"
+            *ngFor="let channel of firebase.channelsDataWithRights"
+            [style.background-color]="
+              channel.selected ? 'var(--primary)' : 'white'
+            "
+            (click)="navigateToChannel(channel.channelId)"
+          >
+            <div class="profile-img-and-status">
+              <div class="profile-img middle">
+                <img src="./../../assets/img/hashtag-black.png" />
+              </div>
+            </div>
+
+            <span class="fs18 userName">{{ channel.channelName }}</span>
+          </div>
+
+          <h3 class="bold" *ngIf="this.filteredUsers.length !== 0">User:</h3>
+          <div
+            class="members-list-search horicontal"
+            *ngFor="let user of filteredUsers"
+            [style.background-color]="
+              user.selected ? 'var(--primary)' : 'white'
+            "
+            (click)="navigateToUser(user.userId)"
+          >
+            <div class="profile-img-and-status">
+              <div
+                [style.background-image]="'url(' + user.profileImg + ')'"
+                class="profile-img"
+              ></div>
+              <img
+                [src]="
+                  user.status
+                    ? './../../../assets/img/online.png'
+                    : './../../../assets/img/offline.png'
+                "
+                class="status"
+              />
+            </div>
+
+            <span class="fs18 userName">{{ user.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- search end -->
+
+    <div class="custom-scroll-box scroll-bar">
+
+    <div class="channels-content column">
+      <div class="horicontal spaceBetween channel-dropdown">
+        <div
+          (click)="toggleRotationChannel()"
+          class="open-channel horicontal"
+          (mouseenter)="changeImagesChannel(true)"
+          (mouseleave)="changeImagesChannel(false)"
+        >
+          <img
+            [@rotateAnimation]="isOpen ? 'open' : 'closed'"
+            [src]="openMenuChannel"
+          />
+          <div class="channel-title horicontal">
+            <img [src]="workspaceChannel" class="icon-size-24" />
+            <h3 class="bold">Channels</h3>
+          </div>
+        </div>
+        <div class="add-channel-plus-img" (click)="openAddChannels()"></div>
+      </div>
+
+      <div *ngIf="!isOpen" class="add-channel">
+        <div>
+          <div
+            class="channel-area"
+            [ngStyle]="{
+              display: firebase.channelsArray.length === 0 ? 'none' : 'flex'
+            }"
+          >
+            <div
+              *ngFor="let channel of firebase.currentUserWithRights"
+              class="channel"
+              (click)="selectChannel('channel', '0lGTjEPv5uRfvNUuCf5L')"
+            >
+              <div
+                *ngIf="channel.channelId === '0lGTjEPv5uRfvNUuCf5L'"
+                class="hashtag-and-name horicontal channel-distance-welcome"
+                [ngClass]="{
+                  channelIsActive:
+                    channel.channelId === firebase.currentChannelId
+                }"
+              >
+                <div class="icon-size-24 hashtag"></div>
+                <span
+                  class="fs18 channel-name"
+                  *ngIf="channel.channelId === '0lGTjEPv5uRfvNUuCf5L'"
+                  >{{ channel.channelName }}</span
+                >
+              </div>
+            </div>
+
+            <div class="column" style="gap: 12px">
+              <div
+                *ngFor="let channel of firebase.currentUserWithRights"
+                class="channel"
+                (click)="selectChannel('channel', channel.channelId)"
+                [ngStyle]="{
+                  'margin-bottom':
+                    channel.channelId === '0lGTjEPv5uRfvNUuCf5L'
+                      ? '-13px'
+                      : null
+                }"
+              >
+                <div
+                  class="hashtag-and-name horicontal"
+                  *ngIf="!(channel.channelId === '0lGTjEPv5uRfvNUuCf5L')"
+                  [ngClass]="{
+                  channelIsActive:
+                    channel.channelId === firebase.currentChannelId,
+                }"
+                >
+                  <div class="icon-size-24 hashtag"></div>
+                  <span
+                    class="fs18 channel-name"
+                    *ngIf="!(channel.channelId === '0lGTjEPv5uRfvNUuCf5L')"
+                    >{{ channel.channelName }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="horicontal add-channel-text" (click)="openAddChannels()">
+        <div class="circle-add-channel-img"></div>
+        <span class="fs18">Channel hinzufügen</span>
+      </div>
+    </div>
+
+    <div class="column">
+      <div
+        (mouseenter)="changeImageMessages(true)"
+        (mouseleave)="changeImageMessages(false)"
+        class="horicontal messages-header dropdown"
+        (click)="toggleRotationMessage()"
+      >
+        <div class="horicontal">
+          <img
+            [@rotateAnimation]="isOpenSecond ? 'open' : 'closed'"
+            [src]="openMenuMessage"
+          />
+          <img [src]="directNewsImage" class="messages-header-profile-img" />
+        </div>
+        <h3 class="bold">Direktnachrichten</h3>
+      </div>
+
+      <div *ngIf="!isOpenSecond" class="messages-users">
+        <div>
+          <div class="members-list-box" *ngIf="!isOpenSecond">
+            <div
+              class="members-list horicontal"
+              *ngFor="let loggedInUser of firebase.loggedInUserArray"
+              (click)="selectChannel('privateChat', loggedInUser)"
+              [ngClass]="{
+                privateChatIsActive: comparePrivateChatId(loggedInUser.userId)
+              }"
+            >
+              <div class="profile-img-and-status">
+                <div
+                  [style.background-image]="
+                    'url(' + loggedInUser.profileImg + ')'
+                  "
+                  class="profile-img"
+                ></div>
+                <img
+                  [src]="
+                    loggedInUser.status
+                      ? './../../../assets/img/online.png'
+                      : './../../../assets/img/offline.png'
+                  "
+                  class="status"
+                />
+              </div>
+
+              <span class="fs18 userName maxNameLenth"
+                >{{ loggedInUser.name }} (Du)</span
+              >
+            </div>
+
+            <ng-container *ngFor="let user of firebase.usersArray">
+              <div
+                class="members-list horicontal"
+                *ngIf="user.userId !== firebase.loggedInUserId"
+                (click)="selectChannel('privateChat', user)"
+                [ngClass]="{
+                  privateChatIsActive: comparePrivateChatId(user.userId)
+                }"
+              >
+                <div class="profile-img-and-status">
+                  <div
+                    [style.background-image]="'url(' + user.profileImg + ')'"
+                    class="profile-img"
+                  ></div>
+                  <img
+                    [src]="
+                      user.status
+                        ? './../../../assets/img/online.png'
+                        : './../../../assets/img/offline.png'
+                    "
+                    class="status"
+                  />
+                </div>
+
+                <span class="fs18 userName maxNameLenth">{{ user.name }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <button
+          class="message-to-all-mobile dNone boxShadow"
+          (click)="routeToDistribute()"
+        >
+          <img
+            src="./../../assets/img/edit-channel-white.png"
+            class="icon-size-24"
+          />
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </mat-drawer>
+</mat-drawer-container>
+
+<div class="sidenav-button">
+  <button
+    class="horicontal"
+    type="button"
+    mat-button
+    (click)="toggleSideNav()"
+    (mouseenter)="changeImagesButton(true)"
+    (mouseleave)="changeImagesButton(false)"
+  >
+    <h4 class="close-btn-text">{{ buttonLabel }}</h4>
+    <img [src]="buttonImage" />
+  </button>
+</div>
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

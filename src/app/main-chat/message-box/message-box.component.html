@@ -1,0 +1,91 @@
+<div class="message-box">
+  <div class="selected-file" *ngIf="selectedFile">
+    <img [src]="selectedFilePreview" class="selected-file-preview" *ngIf="selectedFilePreview" />
+  </div>
+  <div *ngIf="mentionedUsers.length > 0" class="mentioned-users-container scroll-bar">
+    <div
+      *ngFor="let user of mentionedUsers; let i = index"
+      (click)="selectMention(i)"
+      class="mentioned-users scroll-container"
+    >
+      <img [src]="user.profilePicture" class="suggest-profile-picture" />
+      <!-- Display profile picture -->
+      <span>{{ user.name }}</span>
+      <!-- Display name -->
+    </div>
+  </div>
+
+  <div
+  *ngIf="filteredChannels.length > 0"
+  class="mentioned-users-container scroll-bar"
+>
+  <div
+    *ngFor="let channels of filteredChannels; let i = index"
+    (click)="selectChannel(i)"
+    class="mentioned-users scroll-container"
+  >
+  <p>#{{channels.channelName}}</p>
+</div>
+</div>
+
+  <div class="textarea-with-addons">
+    <textarea
+      class="textarea scroll-bar"
+      placeholder="Nachricht an #{{ this.currentChannelName }}"
+      [(ngModel)]="textArea"
+      (input)="suggestUsers(); onTextAreaChange();suggestChannels();"
+      #textareaRef
+      autofocus
+    ></textarea>
+
+    <div class="add-ons">
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        #fileInput
+        style="display: none"
+      />
+
+      <div class="add-ons-left">
+        <img
+          matTooltip="Bild hinzufügen"
+          src="../../../assets/img/add.png"
+          class="add"
+          (click)="fileInput.click()"
+        />
+        <mat-divider class="vertical-divider"></mat-divider>
+        <img
+          matTooltip="Wähle dein Emoji"
+          class="emoji"
+          src="../../../assets/img/emoji.png"
+          (click)="toggleEmojiPicker()"
+        />
+        <emoji-mart
+          class="emoji-mart"
+          *ngIf="isEmojiPickerVisible"
+          (emojiSelect)="addEmoji($event)"
+          title="Wähle dein Emoji"
+        ></emoji-mart>
+        <img
+          matTooltip="Markiere jemanden"
+          src="../../../assets/img/at-grey.png"
+          alt=""
+          class="mention"
+          (click)="addMention()"
+        />
+      </div>
+      <img
+        matTooltip="Senden"
+        src="../../../assets/img/send-dark-blue.png"
+        alt=""
+        class="send"
+        (click)="sendMessage()"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

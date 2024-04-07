@@ -1,0 +1,21 @@
+{
+  "targets": {
+    "dabubble-342cb": {
+      "hosting": {
+        "dabubble": [
+          "dabubble-342cb"
+        ]
+      }
+    },
+    "dabubble-2": {
+      "hosting": {
+        "dabubble": [
+          "dabubble-2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dabubble-2"
+  }
+}

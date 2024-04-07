@@ -1,0 +1,151 @@
+.desktop-view {
+  display: flex;
+  margin-bottom: 25px;
+
+  .private-chat-container {
+    flex-grow: 1;
+    margin: 20px 20px 0 20px;
+    height: calc(100% - 45px);
+    background: var(--white);
+    border-radius: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header-chat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 24px;
+      padding: 25px 45px;
+      box-sizing: border-box;
+      box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.08);
+      height: 96px;
+
+      .left-side-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8125rem; // 13px
+
+        .hashtag-and-name {
+          gap: 0.9375rem; // 15px
+          padding: 0.5rem 0.25rem; // 8px 4px
+          cursor: pointer;
+          border-radius: 1.875rem; // 30px
+
+          &:hover {
+            color: var(--purple);
+            background-color: var(--background-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile-img-and-status {
+  width: 3.125rem; // 50px
+  height: 3.125rem;
+  position: relative;
+
+  .status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: inset 0 0 0 2px var(--background-color),
+      0 0 0 2px var(--background-color);
+    border-radius: 100%;
+    width: 0.875rem; // 14px
+    height: 0.875rem; // 14px
+  }
+}
+
+.empty-pc-content {
+  margin: 0 45px 25px;
+}
+
+app-message-layout-pc {
+  position: relative;
+  margin-top: auto;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  align-items: flex-end;
+  overflow-y: scroll;
+  max-height: 60vh;
+  margin-bottom: 38px;
+}
+
+.user-img {
+  border-radius: 100% !important; // 30px
+}
+
+.name-pimg {
+  display: flex;
+  align-items: end;
+  margin-bottom: 24px;
+  gap: 25px;
+  .user-pimg {
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+  h4 {
+    cursor: pointer;
+  }
+}
+
+.chat-partner {
+  color: var(--purple);
+  cursor: pointer;
+  text-align: center;
+  &:hover {
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 980px) {
+  .private-chat-container {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    height: calc(100vh - 80px) !important;
+    border-radius: 0 !important;
+  }
+
+  .channel-name {
+    font-size: 20px;
+  }
+
+  .hashtag-and-name {
+    padding: 0 !important;
+    &:hover {
+      background-color: white !important;
+    }
+  }
+
+  .header-chat {
+    padding: 10px 16px !important;
+    height: 78px;
+  }
+
+  app-message-layout-pc {
+    margin-bottom: 0;
+  }
+
+  .empty-pc-content {
+    margin: 0 16px 45px;
+    .name-pimg {
+      display: flex;
+      align-items: end;
+      margin-bottom: 24px;
+      gap: 10px;
+      .user-pimg {
+        width: 88px;
+        height: 88px;
+      }
+    }
+  }
+
+  
+}

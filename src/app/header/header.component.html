@@ -1,0 +1,114 @@
+<div class="header-wrapper spaceBetween horicontal">
+  <img src="./../../assets/img/text-logo.png" class="header-logo" 
+  [style.display]="drawerService.isSideNavMobileVisible() ? 'flex' : 'none'"
+  />
+  <div class="channel-header-left horicontal" (click)="drawerService.redirectToSideNav()"
+  [style.display]="drawerService.isSideNavMobileVisible() ? 'none' : 'flex'"
+  >
+    <img src="./../../assets/img/keyboard-arrow-down-black.png" class="redirect">
+    <img src="./../../assets/img/channel-logo.png" class="code-learning-img"/>
+    <h4 class="bold">Code learning</h4>
+  </div>
+
+    <div class="search">
+      <div class="header-input">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Code learning durchsuchen"
+          (click)="showDropdown = true"
+          (input)="search($event)"
+        />
+        <img
+        [src]="!showDropdown ? './../../assets/img/search.png' : './../../assets/img/arrow-drop-up-black.png'"
+        class="icon-size-35"
+        (click)="toggleDropdown()"
+      />
+      </div>
+
+      <div class="members-list-box input-slide-down" *ngIf="showDropdown">
+        <div class="members-list-scroll-box scroll-bar">
+          <span
+            class="fs18"
+            *ngIf="
+              firebase.channelsDataWithRights.length === 0 &&
+              this.filteredUsers.length === 0
+            "
+          >
+            Keine Einträge gefunden.
+          </span>
+
+          <h3 class="bold" *ngIf="firebase.channelsDataWithRights.length !== 0">
+            Channels:
+          </h3>
+          <div
+            class="members-list horicontal"
+            *ngFor="let channel of firebase.channelsDataWithRights"
+            [style.background-color]="
+              channel.selected ? 'var(--primary)' : 'white'
+            "
+            (click)="navigateToChannel(channel.channelId)"
+          >
+            <div class="profile-img-and-status">
+              <div class="profile-img middle">
+                <img src="./../../assets/img/hashtag-black.png" />
+              </div>
+            </div>
+
+            <span class="fs18 userName">{{ channel.channelName }}</span>
+          </div>
+
+          <h3 class="bold" *ngIf="this.filteredUsers.length !== 0">User:</h3>
+          <div
+            class="members-list horicontal"
+            *ngFor="let user of filteredUsers"
+            [style.background-color]="
+              user.selected ? 'var(--primary)' : 'white'
+            "
+            (click)="navigateToUser(user.userId)"
+          >
+            <div class="profile-img-and-status">
+              <div
+                [style.background-image]="'url(' + user.profileImg + ')'"
+                class="profile-img"
+              ></div>
+              <img
+                [src]="
+                  user.status
+                    ? './../../../assets/img/online.png'
+                    : './../../../assets/img/offline.png'
+                "
+                class="status"
+              />
+            </div>
+
+            <span class="fs18 userName">{{ user.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-profile horicontal" (click)="headerDropdownMenu()">
+      <h2 class="bold name">{{ firebase.name }}</h2>
+      <div class="profile-img-and-status">
+        <div
+          [style.background-image]="'url(' + firebase.profileImg + ')'"
+          class="profile-img"
+        ></div>
+        <img
+          [src]="
+            firebase.status
+              ? './../../../assets/img/online.png'
+              : './../../../assets/img/offline.png'
+          "
+          class="status"
+        />
+      </div>
+
+      <img
+        class="icon-size-30"
+        src="./../../assets/img/keyboard-arrow-down-black.png"
+      />
+    </div>
+  </div>
+

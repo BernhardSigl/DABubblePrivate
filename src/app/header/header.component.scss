@@ -1,0 +1,239 @@
+.header-wrapper {
+  display: flex;
+  margin: 1.5625rem 2.125rem 0 2.8125rem; // 25px 0 34px 45px
+}
+
+.channel-header-left {
+  display: none;
+  cursor: pointer;
+}
+
+.header-logo {
+  width: 242px;
+  height: 70px;
+  margin-right: 119px;
+}
+
+.header-input {
+  display: flex;
+  box-sizing: border-box;
+  padding: 1.1563rem 2.8125rem; // 18.5px 45px
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 2.625rem;
+  background: var(--White, #fff);
+  height: 70px;
+
+  input {
+    color: black;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0;
+    input::placeholder {
+      color: var(--Text-gray, #686868);
+    }
+  }
+}
+
+.header-profile {
+  gap: 1.25rem; // 20px
+  cursor: pointer;
+  min-width: 352px;
+  justify-content: flex-end;
+  margin-left: 1.25rem;
+
+  .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+    max-height: 4.375rem; // 70px
+    text-align: end;
+  }
+
+  .profile-img-and-status {
+    width: 4.375rem; // 70px
+    height: 4.375rem; // 70px
+    position: relative;
+
+    .profile-img {
+      height: 100%;
+      aspect-ratio: 1/1;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+    }
+
+    .status {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border: 2px solid var(--background-color);
+      border-radius: 100%;
+    }
+  }
+}
+
+.search {
+  width: 100%;
+}
+
+.search-channel,
+.search-user {
+  h3 {
+    padding-left: 10px;
+  }
+}
+
+.searched-user-result {
+  display: flex;
+  img {
+    width: 30px;
+    border-radius: 100%;
+    height: 30px;
+  }
+}
+
+.searched-channel-result,
+.searched-user-result {
+  &:hover {
+    background-color: #c4c2c2;
+    cursor: pointer;
+  }
+}
+
+.members-list-box {
+  animation: slideDownDropdown 0.5s ease forwards;
+  position: absolute;
+  top: 100px;
+  padding: 1.25rem 1.3125rem;
+  background: white;
+  border-radius: 1.875rem 0 1.875rem 1.875rem;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+
+  .members-list-scroll-box {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 30.9375rem; // 495px
+    gap: 0.8125rem; // 13px
+  }
+
+  .members-list {
+    display: flex;
+    gap: 0.9375rem; // 15px
+    cursor: pointer;
+    padding: 0.25rem 1.25rem; // 4px 20px
+    border-radius: 1.875rem; // 30px
+    margin-right: 0.25rem; // 4px
+
+    &:not([style*="--primary"]) {
+      &:hover {
+        background-color: var(--background-color) !important;
+      }
+    }
+  }
+}
+
+.profile-img-and-status {
+  width: 3.125rem; // 50px
+  height: 3.125rem;
+  position: relative;
+
+  .profile-img {
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+  }
+
+  .status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 2px solid var(--background-color);
+    border-radius: 100%;
+    width: 0.875rem; // 14px
+    height: 0.875rem; // 14px
+  }
+}
+
+.userName {
+  cursor: pointer !important;
+}
+
+.input-slide-down {
+  animation: slideDown 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(-100%);
+  display: flex;
+  align-items: center;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .header-wrapper {
+    margin: 0;
+    padding: 15px 16px;
+    box-sizing: border-box;
+  }
+
+  .channel-header-left {
+    display: flex;
+    gap: 10px;
+    h4 {
+      width: 156px;
+    }
+  }
+
+  .header-logo {
+    width: auto;
+    height: 45px;
+    margin-right: 0;
+  }
+
+  .header-input {
+    display: none;
+  }
+
+  .header-profile {
+    margin-left: 0;
+    min-width: auto;
+    img,
+    .name {
+      display: none;
+    }
+  }
+
+  .code-learning-img,
+  .profile-img-and-status {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .redirect {
+    rotate: 90deg;
+    margin-right: -8px;
+  }
+}
+
+@media (max-width: 350px) {
+  .channel-header-left {
+    h4 {
+      font-size: 18px;
+    }
+  }
+}

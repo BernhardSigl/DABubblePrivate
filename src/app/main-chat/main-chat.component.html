@@ -1,0 +1,85 @@
+<app-header></app-header>
+
+<div class="desktop-view">
+  <app-side-nav></app-side-nav>
+  <!-- Chat Header -->
+  <section class="main-chat">
+    <header class="header-chat">
+      <div class="left-side-header">
+        <div class="channel">
+          <div class="hashtag-and-name horicontal" (click)="showChannelInfo()">
+            <div class="icon-size-24 hashtag"></div>
+            <h4 class="channel-name bold">{{ firebase.currentChannelName }}</h4>
+            <div class="arrow-down-img"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-side-header">
+        <div class="profile-images horicontal" (click)="listMembers()">
+          <ng-container
+            *ngFor="let image of firebase.channelProfileImages; let i = index"
+          >
+            <img *ngIf="i < 3" [src]="image" alt="Profile Image" />
+          </ng-container>
+          <ng-container *ngIf="firebase.channelProfileImages.length > 3">
+            <h3 class="profile-counts">
+              +{{ firebase.channelProfileImages.length - 3 }}
+            </h3>
+          </ng-container>
+        </div>
+        <div
+          class="add-member"
+          (click)="addMemberDropdown()"
+          *ngIf="firebase.currentChannelId !== '0lGTjEPv5uRfvNUuCf5L'"
+        ></div>
+        <div
+          class="add-member-mobile"
+          (click)="listMembers()"
+          *ngIf="firebase.currentChannelId !== '0lGTjEPv5uRfvNUuCf5L'"
+        ></div>
+      </div>
+    </header>
+
+    <!--  Messages -->
+
+    <app-message-layout
+      class="scroll-bar"
+      [userId]="userId"
+      [userName]="userName"
+      [userImage]="userImage"
+      #messageLayout
+      id="message-box-id"
+    ></app-message-layout>
+
+    <!-- If there are no text messages in the Channel -->
+
+    <div
+      class="empty-channel-content"
+      *ngIf="(messageLayout.messages$ | async)?.length === 0"
+    >
+      <h4 class="bold">
+        <img class="icon-size-20" src="./../../assets/img/hashtag-black.png" />
+        {{ firebase.currentChannelName }}
+      </h4>
+      <h5>
+        {{ firebase.channelCreatedBy }} hat diesen Channel erstellt. Das ist der
+        Anfang des Channels <span>#{{ firebase.currentChannelName }}</span>
+      </h5>
+    </div>
+
+    <!-- Message box -->
+    <app-message-box [userId]="userId"></app-message-box>
+  </section>
+  <div class="thread-content" id="thread-content">
+    <app-thread
+      id="thread"
+      [selectedMessage]="selectedMessage"
+      [userId]="userId"
+    ></app-thread>
+  </div>
+</div>
+
+<div class="spinner" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
