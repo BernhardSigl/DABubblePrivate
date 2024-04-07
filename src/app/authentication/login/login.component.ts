@@ -291,9 +291,9 @@ export class LoginComponent implements OnInit {
    * Logs in as a guest user.
    */
   async loginAsGuest() {
+    this.hideErros = true;
     const guestEmail = 'guest@guest.de';
     const guestPassword = '123456';
-    // debugger;
     try {
       this.isLoading = true;
       await this.authenticateGuest(guestEmail, guestPassword);
@@ -307,6 +307,7 @@ export class LoginComponent implements OnInit {
       this.handleLoginErrorGuest(error);
     }
     this.isLoading = false;
+    this.hideErros = false;
   }
 
   private async authenticateGuest(
