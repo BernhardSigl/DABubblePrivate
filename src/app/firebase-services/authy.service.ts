@@ -81,7 +81,7 @@ export class AuthyService {
           photoURL: user.profileImg,
         });
       } else {
-        console.error('Current user is null. Unable to update user data.');
+        // console.error('Current user is null. Unable to update user data.');
       }
     } catch (error) {
       console.error('Error updating user data:', error);

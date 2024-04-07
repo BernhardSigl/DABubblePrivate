@@ -47,7 +47,7 @@ export class ChooseAvaterComponent implements OnInit {
     private authyService: AuthyService,
     private router: Router,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -61,76 +61,74 @@ export class ChooseAvaterComponent implements OnInit {
 
   async handleFileSelect(event: any): Promise<void> {
     const file = event.target.files[0];
-
     if (!file) {
-        alert('Please select a file.');
-        return;
+      alert('Please select a file.');
+      return;
     }
-
     try {
-        const dataURL = await this.readFileAsDataURL(file);
-
-        const downloadURL = await this.uploadImageToFirebaseStorage(file, dataURL);
-
-        this.profileImageSrc = downloadURL;
-
-        await this.updateUserDataWithImageURL(downloadURL);
+      const dataURL = await this.readFileAsDataURL(file);
+      const downloadURL = await this.uploadImageToFirebaseStorage(
+        file,
+        dataURL
+      );
+      this.profileImageSrc = downloadURL;
+      await this.updateUserDataWithImageURL(downloadURL);
     } catch (error) {
-        console.error('Error uploading avatar:', error);
+      console.error('Error uploading avatar:', error);
     }
-}
+  }
 
-private readFileAsDataURL(file: File): Promise<string> {
+  private readFileAsDataURL(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            resolve(event.target?.result as string);
-        };
-        reader.onerror = (error) => {
-            reject(error);
-        };
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        resolve(event.target?.result as string);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
     });
-}
+  }
 
-private async uploadImageToFirebaseStorage(file: File, dataURL: string): Promise<string> {
-    const storageRef = ref(this.storage, `profilePicture/${this.userName}_${file.name}`);
+  private async uploadImageToFirebaseStorage(
+    file: File,
+    dataURL: string
+  ): Promise<string> {
+    const storageRef = ref(
+      this.storage,
+      `profilePicture/${this.userName}_${file.name}`
+    );
     await uploadString(storageRef, dataURL, 'data_url');
     return getDownloadURL(storageRef);
-}
+  }
 
-private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
+  private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
     const user = new User({
-        name: this.userName,
-        email: this.email,
-        userId: '',
-        profileImg: downloadURL,
-        password: '',
+      name: this.userName,
+      email: this.email,
+      userId: '',
+      profileImg: downloadURL,
+      password: '',
     });
     await this.authyService.updateUserData(user);
-}
+  }
 
-
-  // Function to trigger file input click when "Datei hochladen" link is clicked
   triggerFileInput(): void {
     document.getElementById('uploadFile')?.click();
   }
 
   async handleAvatarSelect(avatarSrc: string): Promise<void> {
-    // Update the profileImageSrc with the selected avatar
     this.profileImageSrc = avatarSrc;
-
-    // Update the user's profileImg in Firestore
     const user = new User({
       name: this.userName,
       email: this.email,
       userId: '',
-      profileImg: avatarSrc, // Use the selected image URL
+      profileImg: avatarSrc,
       password: '',
     });
 
     try {
-      // If the user is already registered, update their profileImg
       if (this.user && this.user.userId) {
         user.userId = this.user.userId;
         await this.authyService.updateUserData(user);
@@ -161,7 +159,7 @@ private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
           duration: 3000, // Duration the toast is shown (in milliseconds)
           horizontalPosition: 'right', // Position of the toast
           verticalPosition: 'bottom',
-          panelClass: ['no-close-button'], 
+          panelClass: ['no-close-button'],
         });
       });
     } catch (error) {
@@ -169,7 +167,7 @@ private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
         duration: 3000, // Duration the toast is shown (in milliseconds)
         horizontalPosition: 'right', // Position of the toast
         verticalPosition: 'bottom',
-        panelClass: ['no-close-button'], 
+        panelClass: ['no-close-button'],
       });
     }
   }
@@ -183,7 +181,7 @@ private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
           `users/${this.user.userId}`
         );
         await setDoc(userRef, this.user.toJson());
-      
+
         return userRef;
       } catch (error) {
         console.error('Error adding user to collection:', error);
@@ -220,15 +218,15 @@ private async updateUserDataWithImageURL(downloadURL: string): Promise<void> {
     return new Blob([u8arr], { type: mime });
   }
 
-  showPrivacy(){
+  showPrivacy() {
     this.dialog.open(PolicyPopupComponent, {
-      panelClass: ['border', 'imprint-policy-popup']
+      panelClass: ['border', 'imprint-policy-popup'],
     });
   }
 
   showImprint() {
     this.dialog.open(ImprintPopupComponent, {
-      panelClass: ['border', 'imprint-policy-popup']
+      panelClass: ['border', 'imprint-policy-popup'],
     });
   }
 }
