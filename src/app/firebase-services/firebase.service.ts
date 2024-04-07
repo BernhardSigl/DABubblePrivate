@@ -806,14 +806,12 @@ export class FirebaseService {
       const querySnapshot = await getDocs(q);
       for (const doc of querySnapshot.docs) {
         try {
-          const messageData = doc.data(); // Retrieve the document data
+          const messageData = doc.data();
           const channelMessagesId = doc.id;
           this.channelMessagesId = channelMessagesId;
           if (messageData['senderId'] === userId) {
-            const messageRef = doc.ref; // Access the document reference
-            // Update the profile image in the message data
+            const messageRef = doc.ref;
             const updatedData = { ...messageData, image: newImageUrl };
-            // Set the updated data back to the document
             await setDoc(messageRef, updatedData);
           }
         } catch (updateError) {
@@ -823,8 +821,16 @@ export class FirebaseService {
     } catch (error) {
       console.error('Error updating profile image in channelMessages:', error);
     }
-
   }
 
-
+  async updateProfileImages(): Promise<void> {
+    const members = this.currentChannelData[0].members;
+    const users = this.usersArray;
+    for (let member of members) {
+      const user = users.find((u) => u.userId === member.userId);
+      if (user && member.profileImg !== user.profileImg) {
+        member.profileImg = user.profileImg;
+      }
+    }
+  }
 }

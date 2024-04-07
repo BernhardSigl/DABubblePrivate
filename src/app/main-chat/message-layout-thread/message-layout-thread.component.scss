@@ -8,12 +8,12 @@
   flex-direction: row-reverse;
   .thread-profile-img {
     margin: 0 20px;
-
     img {
       border-radius: 100%;
       width: 70px;
       height: 70px;
       cursor: pointer;
+      object-fit: cover;
     }
   }
 }
@@ -38,6 +38,7 @@
       width: 70px;
       height: 70px;
       cursor: pointer;
+      object-fit: cover;
     }
   }
 }

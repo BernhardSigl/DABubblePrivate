@@ -9,50 +9,48 @@ import { ViewSpecificProfileComponent } from '../view-specific-profile/view-spec
 @Component({
   selector: 'app-list-members',
   standalone: true,
-  imports: [
-    CommonModule,
-    AddMembersRetrospectivelyComponent
-  ],
+  imports: [CommonModule, AddMembersRetrospectivelyComponent],
   templateUrl: './list-members.component.html',
-  styleUrl: './list-members.component.scss'
+  styleUrl: './list-members.component.scss',
 })
 export class ListMembersComponent {
+  constructor(
+    public firebase: FirebaseService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ListMembersComponent>
+  ) {}
 
-constructor(
-  public firebase: FirebaseService,
-  public dialog: MatDialog,
-  public dialogRef: MatDialogRef<ListMembersComponent>,
-){}
+  async ngOnInit(): Promise<void> {
+    await this.updateOnlineStatus();
+    await this.firebase.updateProfileImages();
+  }
 
-async ngOnInit(): Promise<void> {
-   await this.updateOnlineStatus();
-}
-
-async updateOnlineStatus(): Promise <void> {
-  for (let member of this.firebase.currentChannelData[0].members) {   
-    const user = this.firebase.usersArray.find(u => u.userId === member.userId);
-    if (user) {
-      member.statusChangeable = user.statusChangeable;
-      member.status = user.status;
+  async updateOnlineStatus(): Promise<void> {
+    for (let member of this.firebase.currentChannelData[0].members) {
+      const user = this.firebase.usersArray.find(
+        (u) => u.userId === member.userId
+      );
+      if (user) {
+        member.statusChangeable = user.statusChangeable;
+        member.status = user.status;
+      }
     }
   }
-}
 
-addMemberDropdown() {
-  this.dialogRef.close();
-  this.dialog.open(AddMembersRetrospectivelyComponent, {
-    position: { top: '210px' },
-    panelClass: ['no-border-tr', 'addMembersRetrospectivePopup'],
-  });
-}
+  addMemberDropdown() {
+    this.dialogRef.close();
+    this.dialog.open(AddMembersRetrospectivelyComponent, {
+      position: { top: '210px' },
+      panelClass: ['no-border-tr', 'addMembersRetrospectivePopup'],
+    });
+  }
 
-showProfile(user: any) {
-  this.dialog.open(ViewSpecificProfileComponent, {
-    data: {
-      user: user,
-    },
-    panelClass: ['border', 'view-profile-popup']
-  });
-}
-
+  showProfile(user: any) {
+    this.dialog.open(ViewSpecificProfileComponent, {
+      data: {
+        user: user,
+      },
+      panelClass: ['border', 'view-profile-popup'],
+    });
+  }
 }
