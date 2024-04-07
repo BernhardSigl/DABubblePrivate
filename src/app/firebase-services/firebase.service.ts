@@ -675,7 +675,6 @@ export class FirebaseService {
         messages: docData['messages'],
       });
     } else {
-      console.log('Keine Nachricht gefunden');
       return null;
     }
   }

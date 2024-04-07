@@ -67,7 +67,7 @@ export class VerifyComponent {
       }
     } catch (error: any) {
       this.handleLoginError(error);
-      throw error; // Re-throw the error to propagate it to the calling function
+      throw error;
     }
   }
 
