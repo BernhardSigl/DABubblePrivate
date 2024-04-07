@@ -297,7 +297,7 @@ export class LoginComponent implements OnInit {
     try {
       this.isLoading = true;
       await this.authenticateGuest(guestEmail, guestPassword);
-      const userId = 'BbEWPuFwTxg2MsNq9LafzWxNh2u1';
+      const userId = 'xpzI8jsriqUqzq4KKqMzoaoouKc2';
       this.clearStorage();
       this.saveUserIdToLocalStorage(userId);
       await this.firebase.online();

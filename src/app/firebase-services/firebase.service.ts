@@ -332,7 +332,7 @@ export class FirebaseService {
   }
 
   currentOnClickedWelcomeChannelDocRef() {
-    return doc(this.getChannelColRef(), '0lGTjEPv5uRfvNUuCf5L');
+    return doc(this.getChannelColRef(), '3sMC3Js0SuJwUIJmOSmk');
   }
 
   async subAllChannels(): Promise<void> {
@@ -432,7 +432,7 @@ export class FirebaseService {
     await this.updateWelcomeChannel(this.usersArray);
     await setDoc(
       this.getSingleUserDocRef(),
-      { channelRights: '0lGTjEPv5uRfvNUuCf5L' },
+      { channelRights: '3sMC3Js0SuJwUIJmOSmk' },
       { merge: true }
     );
     await this.selectWelcomeChannel();
@@ -440,8 +440,8 @@ export class FirebaseService {
 
   async selectWelcomeChannel() {
     await this.channelOrPrivateChat('channel');
-    await this.activeChannelId('channel', '0lGTjEPv5uRfvNUuCf5L');
-    this.setSelectedChannelId('0lGTjEPv5uRfvNUuCf5L');
+    await this.activeChannelId('channel', '3sMC3Js0SuJwUIJmOSmk');
+    this.setSelectedChannelId('3sMC3Js0SuJwUIJmOSmk');
   }
 
   async addNewPrivateMessage(user: any) {
@@ -538,16 +538,14 @@ export class FirebaseService {
       const creator = this.usersArray.find(
         (user) => user.userId === createdByUserId
       );
-
+      
       (this.currentChannelName = this.currentChannelData[0].channelName),
         (this.channelMembers = this.currentChannelData[0].members);
 
-      // noch ändern !!!
       if (creator) {
         this.channelCreatedBy = creator.name;
       } else {
-        // delete
-        this.channelCreatedBy = this.currentChannelData[0].createdBy; // delete
+        this.channelCreatedBy = 'Ersteller existiert nicht mehr';
       }
 
       this.channelDescription = this.currentChannelData[0].description;

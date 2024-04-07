@@ -63,9 +63,9 @@ export class AddMemberComponent {
 
   addGuest() {
     if (!this.addGuestToInput) {
-      if (this.firebase.loggedInUserId !== 'BbEWPuFwTxg2MsNq9LafzWxNh2u1') {
+      if (this.firebase.loggedInUserId !== 'xpzI8jsriqUqzq4KKqMzoaoouKc2') {
         const selectedUsers = this.firebase.usersArray.find((user) => {
-          return user.userId === 'BbEWPuFwTxg2MsNq9LafzWxNh2u1';
+          return user.userId === 'xpzI8jsriqUqzq4KKqMzoaoouKc2';
         });
         this.memberService.selectedUsers.push(selectedUsers);
       }
