@@ -27,7 +27,6 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -103,6 +102,7 @@ export class LoginComponent implements OnInit {
   setNone: boolean = false;
   moveState: string = 'middle';
   animationPlayed: boolean = false;
+  hideErros: boolean = false;
   loginForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -370,7 +370,7 @@ export class LoginComponent implements OnInit {
       }
       this.loginForm.enable();
       this.isLoading = false;
-    } else {
+    } else if (!this.hideErros) {
       this.email?.markAsTouched();
       this.password?.markAsTouched();
     }
@@ -387,6 +387,7 @@ export class LoginComponent implements OnInit {
       const userDocId = await this.findUserDocumentId(this.userId);
 
       if (userDocId) {
+        this.hideErros = true;
         this.clearStorage();
         localStorage.setItem('userId', userDocId);
         this.navigateToMainPage();

@@ -48,6 +48,7 @@
   height: 3.125rem;
   position: relative;
 
+
   .status {
     position: absolute;
     bottom: 0;
@@ -78,6 +79,7 @@ app-message-layout-pc {
 
 .user-img {
   border-radius: 100% !important; // 30px
+  object-fit: cover;
 }
 
 .name-pimg {
@@ -90,6 +92,7 @@ app-message-layout-pc {
     width: 100px;
     height: 100px;
     cursor: pointer;
+    object-fit: cover;
   }
   h4 {
     cursor: pointer;
