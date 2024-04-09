@@ -34,19 +34,20 @@
 .add-channel {
   margin-top: 1.5625rem;
   padding: 0rem 0.625rem;
-  // .custom-scroll-box {
-  //   min-height: calc(100vh - 590px);
-  //   max-height: calc(100vh - 945px);
-  // }
 }
 
 .add-channel-img {
-  @include hoverSymbol(
-    $path: "./../../assets/img/edit-channel.png",
-    $hPath: "./../../assets/img/edit-channel-blue.png",
-    $size: 2.5rem,
-    $bColor: var(--background-color)
-  ); // 40px
+  background-image: url('./../../assets/img/edit-channel.png');
+  width: 2.5rem;
+  height: 2.5rem; // 40px
+  cursor: pointer;
+  border-radius: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  &:hover {
+    background-image: url('./../../assets/img/edit-channel-blue.png');
+    background-color: var(--background-color);
+  }
 }
 
 .sidenav-button {
@@ -110,12 +111,18 @@
 }
 
 .add-channel-plus-img {
-  @include hoverSymbol(
-    $path: "./../../assets/img/plus-black.png",
-    $hPath: "./../../assets/img/plus-blue.png",
-    $size: 1.5rem,
-    $bColor: var(--background-color)
-  ); // 24px
+  background-image: url('./../../assets/img/plus-black.png');
+  width: 30px;
+  height: 30px; 
+  cursor: pointer;
+  color: var(--background-color);
+  border-radius: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  &:hover {
+    background-image: url('./../../assets/img/plus-blue.png');
+    background-color: var(--background-color);
+  }
 }
 
 .add-channel-text {
@@ -125,23 +132,24 @@
   height: 33px;
 
   .circle-add-channel-img {
-    @include hoverSymbol(
-      $path: "./../../assets/img/plus-circle-black.png",
-      $hPath: "./../../assets/img/plus-circle-blue.png",
-      $size: 1.5rem,
-      $bColor: white
-    ); // 24px
+    background-image: url('./../../assets/img/plus-circle-black.png');
+    width: 1.5rem;
+    height: 1.5rem; 
+    cursor: pointer;
+    color: white;
+    border-radius: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &:hover .circle-add-channel-img {
+    background-image: url('./../../assets/img/plus-circle-blue.png');
+    background-color: var(--background-color);
+    color: #535af1;
   }
 
   &:hover {
-    color: #535af1;
-    .circle-add-channel-img {
-      @include onlyHoverSymbol(
-        $hPath: "./../../assets/img/plus-circle-blue.png",
-        $size: 1.5rem,
-        $bColor: white
-      );
-    }
+    color: #535af1 !important;
   }
 }
 
@@ -176,11 +184,6 @@
       height: 3.125rem;
     }
   }
-
-  // .custom-scroll-box {
-  //   max-height: calc(100vh - 740px);
-  //   min-height: calc(100vh - 540px);
-  // }
 }
 
 .channel-distance-welcome {
