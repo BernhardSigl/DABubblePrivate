@@ -1,10 +1,5 @@
 // declare var google: any;
-import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { from } from 'rxjs';
-import { Auth } from 'firebase/auth';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'

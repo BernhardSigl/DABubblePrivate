@@ -5,14 +5,8 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   getAuth,
-  UserCredential,
   fetchSignInMethodsForEmail,
   updateProfile,
-  sendSignInLinkToEmail,
-  isSignInWithEmailLink,
-  signInWithEmailLink,
-  updateEmail,
-  sendEmailVerification,
   verifyBeforeUpdateEmail
 } from '@angular/fire/auth';
 import { AppUser } from '../classes/user.class';
@@ -21,9 +15,10 @@ import { FirebaseService } from './firebase.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthyService {
   constructor(private auth: Auth, private firebase: FirebaseService) {
-    this.auth = getAuth();
+    // this.auth = getAuth();
   }
 
   async registerWithEmailAndPassword(user: AppUser) {

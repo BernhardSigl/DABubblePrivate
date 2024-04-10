@@ -457,6 +457,7 @@ export class LoginComponent implements OnInit {
   clearStorage() {
     sessionStorage.clear();
     localStorage.clear();
+    localStorage.setItem('hideThreadOnStart', 'true');
   }
 
   playAnimation() {

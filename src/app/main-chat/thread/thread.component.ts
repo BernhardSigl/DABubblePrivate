@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MessageBoxComponent } from '../message-box/message-box.component';
 import { MessageLayoutComponent } from '../message-layout/message-layout.component';
 import { MessageLayoutThreadComponent } from '../message-layout-thread/message-layout-thread.component';
@@ -15,7 +7,6 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DrawerService } from '../../firebase-services/drawer.service';
 import { MessageBoxThreadComponent } from './message-box-thread/message-box-thread.component';
-import { MessageServiceService } from '../../firebase-services/message-service.service';
 import { FirebaseService } from '../../firebase-services/firebase.service';
 
 @Component({
@@ -44,15 +35,22 @@ export class ThreadComponent implements OnInit {
 
   constructor(
     private drawerService: DrawerService,
-    private el: ElementRef,
-    private scrollHelper: MessageServiceService,
     public firebase: FirebaseService
   ) {}
-  // *ngIf="drawerService.isOpen$ | async"
+
   async ngOnInit(): Promise<void> {
     this.drawerService.isOpen$.subscribe((isOpen) => {
       this.isOpen = isOpen;
-      if (isOpen) {
+
+      const hideThreadOnStartValue = localStorage.getItem('hideThreadOnStart');
+      if (hideThreadOnStartValue === 'true' && isOpen) {
+        localStorage.setItem('hideThreadOnStart', 'false');
+        this.isOpen = false;
+        isOpen = false;
+        this.drawerService.closeDrawer();
+      }
+
+      if (this.isOpen) {
         this.drawer.close();
         this.threadWindowBehaviour('open');
       } else {
@@ -60,6 +58,17 @@ export class ThreadComponent implements OnInit {
       }
     });
     await this.loadCurrentChannelName();
+  }
+
+  closeThreadOnStart(isOpen: boolean) {
+    const hideThreadOnStartValue = localStorage.getItem('hideThreadOnStart');
+    if (hideThreadOnStartValue === 'true' && isOpen) {
+      localStorage.setItem('hideThreadOnStart', 'false');
+      this.isOpen = false;
+      setTimeout(() => {
+        this.drawer.close();
+      }, 1000);
+    }
   }
 
   threadWindowBehaviour(openOrClosed: string) {

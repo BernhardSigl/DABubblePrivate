@@ -5,7 +5,6 @@ import {
   EventEmitter,
   Output,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
   HostListener,
 } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';

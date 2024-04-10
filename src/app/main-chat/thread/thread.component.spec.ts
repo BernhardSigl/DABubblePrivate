@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ThreadComponent } from './thread.component';
+import { AuthyService } from '../../firebase-services/authy.service';
 
 describe('ThreadComponent', () => {
   let component: ThreadComponent;
@@ -8,7 +9,8 @@ describe('ThreadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ThreadComponent]
+      imports: [ThreadComponent],
+      providers: [AuthyService],
     })
     .compileComponents();
     
