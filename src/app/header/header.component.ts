@@ -1,23 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd } from '@angular/router';
-import { AvatarDataService } from '../firebase-services/avatar-data.service';
-import {
-  Firestore,
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from '@angular/fire/firestore';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { HeaderDropdownComponent } from '../popup/header-dropdown/header-dropdown.component';
 import { FirebaseService } from '../firebase-services/firebase.service';
-import { user } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { DrawerService } from '../firebase-services/drawer.service';
 @Component({
